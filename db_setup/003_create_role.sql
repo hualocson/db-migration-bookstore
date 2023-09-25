@@ -1,0 +1,1 @@
+CREATE ROLE admin_access LOGIN PASSWORD 'admin-password-here';

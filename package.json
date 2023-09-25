@@ -1,0 +1,20 @@
+{
+  "name": "db-migrations",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "migrate": "ley"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ley": "^0.8.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "postgres": "^3.3.5"
+  }
+}
