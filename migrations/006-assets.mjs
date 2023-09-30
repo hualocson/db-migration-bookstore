@@ -4,8 +4,7 @@ export async function up(client) {
       id SERIAL PRIMARY KEY,
       cloudinary_public_id VARCHAR(200) NOT NULL,
       secure_url VARCHAR(200) NOT NULL,
-      original_filename VARCHAR(200) NOT NULL,
-      size INT NOT NULL,
+      file_size INT NOT NULL,
       created_at TIMESTAMPTZ DEFAULT NOW(),
       updated_at TIMESTAMPTZ DEFAULT NOW(),
       deleted_at TIMESTAMPTZ DEFAULT NULL
