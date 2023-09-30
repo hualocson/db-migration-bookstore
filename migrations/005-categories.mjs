@@ -1,13 +1,16 @@
 export async function up(client) {
   await client`
-    CREATE TABLE public.categories (
+    CREATE TABLE IF NOT EXISTS public.categories (
       id SERIAL PRIMARY KEY,
-      name VARCHAR(255) NOT NULL,
-      slug VARCHAR(255) NOT NULL UNIQUE,
+      name VARCHAR(200) NOT NULL,
+      slug VARCHAR(200) NOT NULL UNIQUE,
       parent_id INT,
       description TEXT,
-      image VARCHAR(255),
+      image VARCHAR(200),
       status INT REFERENCES enums(id) ON DELETE RESTRICT,
+      created_at TIMESTAMPTZ DEFAULT NOW(),
+      updated_at TIMESTAMPTZ DEFAULT NOW(),
+      deleted_at TIMESTAMPTZ DEFAULT NULL,
       FOREIGN KEY (parent_id) REFERENCES categories (id) ON DELETE SET NULL
     )
   `;
