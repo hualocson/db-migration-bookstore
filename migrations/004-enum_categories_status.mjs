@@ -9,6 +9,6 @@ export async function up(client) {
 
 export async function down(client) {
   await client`
-    DELETE FROM public.enums WHERE enum_name IN ('active', 'inactive')
+    DELETE FROM public.enums WHERE id IN (1001, 1002)
   `
 }
