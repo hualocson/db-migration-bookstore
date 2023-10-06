@@ -18,22 +18,22 @@ export async function up(client) {
         deleted_at TIMESTAMPTZ DEFAULT NULL
       )
     `;
-  
+
     await client`
     CREATE TRIGGER set_timestamp
     BEFORE UPDATE ON public.customers
     FOR EACH ROW
     EXECUTE PROCEDURE trigger_set_timestamp();
-    `;
+  `;
     await client`
       GRANT SELECT, INSERT, UPDATE ON public.customers TO admin_access;
     `;
-  
+
     await client`
-      GRANT SELECT ON public.customers TO backend_access;
+      GRANT SELECT, INSERT, UPDATE ON public.customers TO backend_access;
     `;
   }
-  
+
   export async function down(client) {
     await client`
       DROP TRIGGER IF EXISTS set_timestamp ON public.customers
@@ -42,4 +42,3 @@ export async function up(client) {
       DROP TABLE IF EXISTS public.customers
     `;
   }
-  
