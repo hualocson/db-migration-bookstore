@@ -15,3 +15,8 @@ GRANT USAGE ON SCHEMA admin TO admin_access;
 GRANT CREATE ON SCHEMA admin TO admin_access;
 GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA admin TO admin_access;
 ALTER DEFAULT PRIVILEGES IN SCHEMA admin GRANT SELECT, INSERT, UPDATE ON TABLES TO admin_access;
+
+-- Grant rights to admin_access to admin schema
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO admin_access;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO backend_access;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA admin TO admin_access;
