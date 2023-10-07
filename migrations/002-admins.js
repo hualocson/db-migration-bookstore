@@ -15,21 +15,14 @@ export const up = async client => {
     UPDATE
       ON admin.admins FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
     `;
-
-  await client `
-    INSERT INTO
-      admin.admins (username, user_password, admin_rank)
-    VALUES
-      (
-        'your-superadmin-name',
-        'hashed-password-from-endpoint',
-        3
-      )
-  `;
 };
 
 export const down = async client => {
+  await client`
+    DROP TRIGGER IF EXISTS set_timestamp ON admin.admins
+  `;
+
   await client `
     DROP TABLE IF EXISTS admin.admins
-  `
+  `;
 };

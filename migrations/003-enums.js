@@ -10,10 +10,20 @@ export const up = async client => {
       updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `;
+
+  await client`
+    CREATE TRIGGER set_timestamp
+    BEFORE UPDATE ON public.enums
+    FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+  `;
 };
 
 export const down = async client => {
+  await client`
+    DROP TRIGGER IF EXISTS set_timestamp ON public.enums;
+  `;
+
   await client `
-    DROP TABLE IF EXISTS public.enums
+    DROP TABLE IF EXISTS public.enums;
   `
 };

@@ -4,26 +4,28 @@ export async function up(client) {
     await client`
       CREATE TABLE IF NOT EXISTS public.customers (
         id serial PRIMARY KEY,
-        first_name VARCHAR(200) NOT NULL,
-        last_name VARCHAR(200) NOT NULL,
-        email VARCHAR(200) NOT NULL,
-        address VARCHAR(200) NOT NULL,
-        city VARCHAR(200) NOT NULL,
-        state VARCHAR(200) NOT NULL,
-        country VARCHAR(200) NOT NULL,
-        postal_code VARCHAR(200) NOT NULL,
-        phone_number VARCHAR(200) NOT NULL,
+        email VARCHAR(200) NOT NULL UNIQUE,
+        status INT REFERENCES public.enums(id) ON DELETE RESTRICT,
         created_at TIMESTAMPTZ DEFAULT NOW(),
         updated_at TIMESTAMPTZ DEFAULT NOW(),
         deleted_at TIMESTAMPTZ DEFAULT NULL
       )
     `;
 
+    // status
     await client`
-    CREATE TRIGGER set_timestamp
-    BEFORE UPDATE ON public.customers
-    FOR EACH ROW
-    EXECUTE PROCEDURE trigger_set_timestamp();
+      INSERT INTO public.enums (id, enum_name, enum_value, table_context)
+      VALUES
+      (1401, 'Pending', 1401, 'public.customers.status'),
+      (1402, 'Active', 1402, 'public.customers.status'),
+      (1403, 'Inactive', 1403, 'public.customers.status')
+    `;
+
+    await client`
+      CREATE TRIGGER set_timestamp
+      BEFORE UPDATE ON public.customers
+      FOR EACH ROW
+      EXECUTE PROCEDURE trigger_set_timestamp();
   `;
     await client`
       GRANT SELECT, INSERT, UPDATE ON public.customers TO admin_access;
@@ -35,6 +37,9 @@ export async function up(client) {
   }
 
   export async function down(client) {
+    await client`
+    DELETE FROM public.enums WHERE id IN (1401, 1402, 1403)
+    `;
     await client`
       DROP TRIGGER IF EXISTS set_timestamp ON public.customers
     `;
