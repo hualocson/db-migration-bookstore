@@ -8,6 +8,10 @@ export async function up(client) {
         state VARCHAR(20),
         postal_code VARCHAR(20),
         country VARCHAR(200),
+        phone_number VARCHAR(20),
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        updated_at TIMESTAMPTZ DEFAULT NOW(),
+        deleted_at TIMESTAMPTZ DEFAULT NULL,
         FOREIGN KEY (customer_id) REFERENCES customers(id)
     );
   `;

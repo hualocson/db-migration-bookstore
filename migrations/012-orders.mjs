@@ -6,6 +6,7 @@ export async function up(client) {
       status INT REFERENCES enums(id) ON DELETE RESTRICT,
       shipping_fee INT,
       total INT NOT NULL,
+      address_id INT REFERENCES addresses(id),
       coupon_id INT REFERENCES coupons(id),
       created_at TIMESTAMPTZ DEFAULT NOW(),
       updated_at TIMESTAMPTZ DEFAULT NOW(),

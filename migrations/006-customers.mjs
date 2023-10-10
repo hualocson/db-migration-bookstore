@@ -38,12 +38,13 @@ export async function up(client) {
 
   export async function down(client) {
     await client`
-    DELETE FROM public.enums WHERE id IN (1401, 1402, 1403)
-    `;
-    await client`
       DROP TRIGGER IF EXISTS set_timestamp ON public.customers
     `;
     await client`
       DROP TABLE IF EXISTS public.customers
+    `;
+
+    await client`
+    DELETE FROM public.enums WHERE id IN (1401, 1402, 1403)
     `;
   }
