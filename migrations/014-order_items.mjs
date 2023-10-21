@@ -4,7 +4,6 @@ export async function up(client) {
       id serial PRIMARY KEY,
       order_id INT REFERENCES orders(id),
       product_id INT REFERENCES products(id),
-      product_name VARCHAR(200),
       quantity INT,
       price INT,
       created_at TIMESTAMPTZ DEFAULT NOW(),
